@@ -13,10 +13,14 @@ The app is built with **TypeScript**, **Redux Toolkit**, and **React Navigation*
 
 ---
 
-Screenshots:
+## Screenshots:
+
 - Rewards List Screen
+
 ![Rewards List](screenshots/rewards_list.png)
+
 - Collected Rewards Screen
+
 ![Collected Rewards](screenshots/collected_rewards.png)
 
 ---
@@ -79,36 +83,31 @@ export const strings = {
 ---
 
 ## Steps to Run / Test
-
 ### 1. Clone the Repository
 ```bash
-git clone <repo-url>
+git clone https://github.com/nithinvtech/rewards-app.git
 cd rewards-app
 ```
 
 ### 2. Install Dependencies
 ```bash
-npm install
+yarn
 ```
 
 ### 3. Run Metro Bundler
 ```bash
-npx react-native start
+yarn react-native start
 ```
 
 ### 4. Run on Android
 ```bash
-npx react-native run-android
+yarn react-native run-android
 ```
 
 ### 5. Run on iOS
 ```bash
-npx react-native run-ios
+yarn react-native run-ios
 ```
-
-### 6. Notes
-- Make sure you have Android Studio / Xcode configured.
-- API base URL can be updated in `appConstants.ts` for different clients.
 
 ---
 
