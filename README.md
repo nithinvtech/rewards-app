@@ -46,7 +46,7 @@ The app is designed for **easy reuse across multiple clients**:
    - Can be changed to switch API environments (staging, production, etc.).
 
 ```ts
-export const BASE_URL = "https://staging.helloagain.at/api/v1/clients/5189/bounties";
+export const BASE_URL = "https://staging.helloagain.at";
 export const COLLECT_REWARD = "COLLECT_REWARD";
 ```
 
