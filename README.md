@@ -1,97 +1,140 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Rewards App - React Native (TypeScript)
 
-# Getting Started
+## Overview
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+A cross-platform React Native app for browsing and collecting loyalty rewards.
 
-## Step 1: Start Metro
+- Browse available rewards from the API.
+- Collect rewards using a **Redux store**.
+- View collected rewards in a separate tab.
+- See reward images in a carousel with pagination indicators.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+The app is built with **TypeScript**, **Redux Toolkit**, and **React Navigation**. Safe area boundaries, dynamic styling, and modular architecture are implemented.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+---
 
-```sh
-# Using npm
-npm start
+Screenshots:
+- Rewards List Screen
+![Rewards List](screenshots/rewards_list.png)
+- Collected Rewards Screen
+![Collected Rewards](screenshots/collected_rewards.png)
 
-# OR using Yarn
-yarn start
+---
+
+## Key Features
+
+- Rewards List: paginated, handles loading/errors, shows only rewards with images, carousel for multiple images, Collect button
+
+- Collected Rewards: displays collected rewards from Redux, empty state message if no rewards collected
+
+- Navigation: bottom tabs with static emoji icons
+
+- Safe Area: supports notches/status bars using `react-native-safe-area-context`
+
+---
+
+## Globalisation & Reusability
+
+The app is designed for **easy reuse across multiple clients**:
+
+1. **Base URL**
+   - Stored in `src/constants/appConstants.ts`.
+   - Can be changed to switch API environments (staging, production, etc.).
+
+```ts
+export const BASE_URL = "https://staging.helloagain.at/api/v1/clients/5189/bounties";
+export const COLLECT_REWARD = "COLLECT_REWARD";
 ```
 
-## Step 2: Build and run your app
+2. **Strings**
+   - All UI text is centralized in `src/i18n/strings.ts`.
+   - Easy to translate for different languages or clients.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```ts
+export const strings = {
+  rewards: "Rewards",
+  collected: "Collected",
+  noRewards: "No rewards collected yet",
+  error: "Failed to load rewards",
+};
 ```
 
-### iOS
+3. **Colors**
+   - Defined in `src/theme/colors.ts`.
+   - Allows changing theme per client without touching components.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+4. **Typography / Text Size**
+   - Centralized in `src/theme/typography.ts`.
+   - Can adjust font size for different clients or accessibility.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+---
 
-```sh
-bundle install
+## Assumptions
+
+- API responses always include `id` and `pictures` array.
+- Only rewards with at least one valid picture are shown.
+- Redux handles only **collected rewards**; no persistent storage implemented.
+- App icons, emojis, and minimal libraries are used to keep app lightweight.
+
+---
+
+## Steps to Run / Test
+
+### 1. Clone the Repository
+```bash
+git clone <repo-url>
+cd rewards-app
 ```
 
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
+### 2. Install Dependencies
+```bash
+npm install
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+### 3. Run Metro Bundler
+```bash
+npx react-native start
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### 4. Run on Android
+```bash
+npx react-native run-android
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### 5. Run on iOS
+```bash
+npx react-native run-ios
+```
 
-## Step 3: Modify your app
+### 6. Notes
+- Make sure you have Android Studio / Xcode configured.
+- API base URL can be updated in `appConstants.ts` for different clients.
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## Folder Structure
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+```
+src/
+├─ api/           # API calls
+├─ components/    # Reusable components (RewardItem, CollectButton)
+├─ navigation/    # AppNavigator (Bottom Tab)
+├─ screens/       # RewardsListScreen, CollectedRewardsScreen
+├─ store/         # Redux store & rewardsSlice
+├─ theme/         # Colors & Typography
+├─ types/         # TypeScript interfaces
+├─ i18n/          # Strings for globalisation
+├─ constants/     # Base URL, action constants
+```
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+---
 
-## Congratulations! :tada:
+## Key Libraries Used
 
-You've successfully run and modified your React Native App. :partying_face:
+- `react-native-snap-carousel` → Image carousel with pagination
+- `redux` & `@reduxjs/toolkit` → State management
+- `react-redux` → Redux bindings
+- `react-navigation` → Bottom tab navigation
+- `react-native-safe-area-context` → Safe area handling
 
-### Now what?
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
